@@ -76,7 +76,7 @@ jobs:
     steps:
       # Check out the repository
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Set up PHP
       - name: Setup PHP
