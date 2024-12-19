@@ -6,10 +6,15 @@ interface ConfigInterface
 {
     public function getProduction(): bool;
     public function getSameSiteStrict(): ?bool;
+    /**  @return array<string, int|string>|null */
     public function getError(): ?array;
+    /**  @return array<string, string>|null */
     public function getScope(): ?array;
+    /**  @return array<string>|null */
     public function getProviderHint(): ?array;
+    /**  @return array<string, string> */
     public function getRoutes(): array;
+    /**  @return array<string, string> */
     public function getCookies(): array;
     public function getLoginSync(): ?callable;
     public function getLogoutSync(): ?callable;

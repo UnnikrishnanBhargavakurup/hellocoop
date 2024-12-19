@@ -7,8 +7,11 @@ use Exception;
 
 class SameSiteCallbackException extends Exception
 {
-    private array $errorDetails;
-
+    /**
+     * @param string $message
+     * @param int $code
+     * @param Throwable|null $previous
+     */
     public function __construct(
         $message = "Same Site Callback Exception",
         $code = 0,

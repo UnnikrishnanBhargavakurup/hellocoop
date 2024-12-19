@@ -14,6 +14,11 @@ class AuthHelper
     {
         $this->pkce = $pkce;
     }
+
+    /**
+     * @param array<string, string> $config
+     * @return array<string, string>
+     */
     public function createAuthRequest(array $config): array
     {
         // Validate required parameters
@@ -28,20 +33,22 @@ class AuthHelper
             throw new InvalidArgumentException('redirect_uri is required in the authorization request.');
         }
 
-        $scopes = $config['scope'] ?? [];
-        if ($scopes && !$this->areScopesValid($scopes)) {
-            throw new InvalidArgumentException('One or more passed scopes are invalid.');
+        $scopes = $config['scope'] ?? Constants::$DEFAULT_SCOPE;
+        if (is_array($scopes)) {
+            if (!$this->areScopesValid($scopes)) {
+                throw new InvalidArgumentException('One or more passed scopes are invalid.');
+            }
+
+            // Add 'openid' and ensure uniqueness
+            $scopes = implode(' ', array_unique(array_merge($scopes, ['openid'])));
         }
 
-        // Add 'openid' and ensure uniqueness
-        $scopes = array_unique(array_merge($scopes ?? Constants::$DEFAULT_SCOPE, ['openid']));
         $nonce = $config['nonce'] ?? $this->generateUuid();
-
         // Prepare parameters
         $params = [
             'client_id'     => $clientId,
             'redirect_uri'  => $redirectUri,
-            'scope'         => implode(' ', $scopes),
+            'scope'         => $scopes,
             'response_type' => $config['response_type'] ?? Constants::$DEFAULT_RESPONSE_TYPE,
             'response_mode' => $config['response_mode'] ?? Constants::$DEFAULT_RESPONSE_MODE,
             'nonce'         => $nonce,
@@ -69,7 +76,7 @@ class AuthHelper
             $params['domain_hint'] = $domainHint;
         }
 
-        $wallet = $config['wallet'] ?? Constants::$PRODUCTION_WALLET;
+        $wallet = !isset($config['wallet']) ? Constants::$PRODUCTION_WALLET : $config['wallet'];
         $url = $wallet . Constants::$DEFAULT_PATH . '?' . http_build_query($params);
 
         return [
@@ -84,6 +91,10 @@ class AuthHelper
         return in_array($scope, Constants::getValidScopes(), true);
     }
 
+    /**
+     * @param array<string> $scopes
+     * @return bool
+     */
     private function areScopesValid(array $scopes): bool
     {
         foreach ($scopes as $scope) {

@@ -20,8 +20,15 @@ class Login
     private OIDCManager $oidcManager;
     private AuthHelper $authHelper;
 
+    /** @var array<string>  */
     private array $redirectURIs;
 
+    /**
+     * @param HelloRequestInterface $helloRequest
+     * @param HelloResponseInterface $helloResponse
+     * @param ConfigInterface $config
+     * @param array<string> $redirectURIs
+     */
     public function __construct(
         HelloRequestInterface $helloRequest,
         HelloResponseInterface $helloResponse,

@@ -7,7 +7,12 @@ interface PageRendererInterface
     /**
      * Render an error page.
      */
-    public function renderErrorPage(string $error, string $errorDescription, string $errorURI, string $targetURI = '/'): string;
+    public function renderErrorPage(
+        string $error,
+        string $errorDescription,
+        string $errorURI,
+        string $targetURI = '/'
+    ): string;
 
     /**
      * Render a same-site page.

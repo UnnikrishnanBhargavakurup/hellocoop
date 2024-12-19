@@ -13,7 +13,7 @@ class Claims
     use OptionalOrgClaimTrait;
 
     /** @var string */
-    public $sub;
+    public string $sub;
 
     public function __construct(string $sub)
     {

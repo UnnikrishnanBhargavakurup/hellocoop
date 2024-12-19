@@ -2,22 +2,41 @@
 
 namespace HelloCoop\Type;
 
-class AuthUpdates extends Claims implements \ArrayAccess
+use ArrayAccess;
+
+/**
+ * @implements ArrayAccess<string, mixed>
+ */
+class AuthUpdates extends Claims implements ArrayAccess
 {
+    /** @var array<string, mixed> */
     private array $additionalProperties = [];
 
-    public function __construct(string $sub, int $iat, array $updates = [])
+    /**
+     * @param string $sub
+     * @param array<string, mixed> $updates
+     */
+    public function __construct(string $sub, array $updates = [])
     {
-        parent::__construct($sub, $iat);
+        parent::__construct($sub);
         $this->additionalProperties = $updates;
     }
 
-    // Magic methods for dynamic properties
+    /**
+     * Magic methods for dynamic properties
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
     public function __set(string $name, $value): void
     {
         $this->additionalProperties[$name] = $value;
     }
 
+    /**
+     * @param string $name
+     * @return mixed|null
+     */
     public function __get(string $name)
     {
         return $this->additionalProperties[$name] ?? null;
@@ -41,7 +60,7 @@ class AuthUpdates extends Claims implements \ArrayAccess
 
     public function offsetGet($offset): ?string
     {
-        return $this->additionalProperties[$offset] ?? null;
+        return is_string($this->additionalProperties[$offset]) ? $this->additionalProperties[$offset] : null;
     }
 
     public function offsetSet($offset, $value): void
@@ -54,6 +73,9 @@ class AuthUpdates extends Claims implements \ArrayAccess
         unset($this->additionalProperties[$offset]);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return array_merge(get_object_vars($this), $this->additionalProperties);

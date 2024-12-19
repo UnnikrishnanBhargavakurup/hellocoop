@@ -8,13 +8,13 @@ use InvalidArgumentException;
 class AuthCookie extends Claims
 {
     /** @var int */
-    public $iat;
+    public int $iat;
 
     /**
      * @var array<string, mixed>
      * Allow arbitrary optional properties.
      */
-    public $extraProperties = [];
+    public array $extraProperties = [];
 
     public function __construct(string $sub, int $iat)
     {
@@ -24,6 +24,8 @@ class AuthCookie extends Claims
 
     /**
      * Add an extra property.
+     * @param string $key
+     * @param mixed $value
      */
     public function setExtraProperty(string $key, $value): void
     {
@@ -32,6 +34,7 @@ class AuthCookie extends Claims
 
     /**
      * Get an extra property.
+     * @return mixed
      */
     public function getExtraProperty(string $key)
     {
@@ -40,6 +43,7 @@ class AuthCookie extends Claims
 
     /**
      * Create an instance from an array of key-value pairs.
+     * @param array<string, int|string> $data
      */
     public static function fromArray(array $data): self
     {
@@ -47,7 +51,10 @@ class AuthCookie extends Claims
             throw new InvalidArgumentException('Missing required keys "sub" or "iat".');
         }
 
-        $instance = new self($data['sub'], $data['iat']);
+        $instance = new self(
+            is_string($data['sub']) ? $data['sub'] : "",
+            is_int($data['iat']) ? $data['iat'] : 0
+        );
 
         foreach ($data as $key => $value) {
             if (!in_array($key, ['sub', 'iat'], true)) {
@@ -60,6 +67,7 @@ class AuthCookie extends Claims
 
     /**
      * Convert the instance to an array of key-value pairs.
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

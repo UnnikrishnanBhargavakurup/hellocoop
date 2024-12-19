@@ -10,7 +10,7 @@
     ],
     "type": "library",
     "require": {
-        "php": ">=7.4 <=8.4.1"
+        "php": ">=7.4 <=8.4.1","ext-json": "*","ext-openssl": "*","ext-curl": "*"
     },
     "license": "MIT",
     "autoload": {

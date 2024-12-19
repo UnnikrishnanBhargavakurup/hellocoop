@@ -14,8 +14,9 @@ class DefaultPageRenderer implements PageRendererInterface
         string $targetURI = '/'
     ): string {
         return <<<HTML
-<html>
+<html lang="en-US">
     <head>
+        <title>Hellō</title>
         <meta charset="UTF-8" />
         <style>
             body {
@@ -104,18 +105,99 @@ HTML;
      */
     public function renderSameSitePage(): string
     {
-        $info = $data['info'] ?? 'No additional information provided.';
+        // XXX: Is this needed?
+        // $info = $data['info'] ?? 'No additional information provided.';
 
         return <<<HTML
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
     <head>
         <meta charset="utf-8"><title>Loading ...</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         <div class="spinner"></div>
-        <script>const currentURL=window.location.href;const newURL=new URL(currentURL);newURL.searchParams.set('same_site','true');fetch(newURL).then(response=>response.json()).then(data=>{if(data&&data.target_uri){window.location=data.target_uri}else{console.error("No target_uri found -> /");window.location='/'} }).catch(error=>{console.error("An error occurred:",error);window.location='/' });</script><style>body{height:100%;min-width:320px;overflow-x:auto;overflow-y:hidden}body{font-family:sans-serif;display:flex;align-items:center;justify-content:center}.spinner{position:absolute;left:50%;top:50%;height:40px;width:40px;margin:-26px 0 0 -26px;box-sizing:content-box;animation:rotation 1s infinite linear;border-width:6px;border-style:solid;border-radius:100%}@keyframes rotation{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}@media(prefers-color-scheme:dark){body{color:#d4d4d4;background:#151515;color-scheme:dark}.spinner{border-color:rgba(116,116,116,0.3);border-top-color:rgb(116,116,116)}}@media(prefers-color-scheme:light){body{color:#303030;background:white;color-scheme:light}.spinner{border-color:rgba(75,75,75,0.3);border-top-color:rgb(75,75,75)}}</style>
+        <script>
+            const currentURL=window.location.href;
+            const newURL=new URL(currentURL);
+            
+            newURL.searchParams.set('same_site','true');
+            fetch(newURL)
+                .then(response=>response.json())
+                .then(data=>{
+                    if(data && data.target_uri)
+                    {
+                        window.location=data.target_uri
+                    }
+                    else
+                    {
+                        console.error("No target_uri found -> /");
+                        window.location='/'
+                    }
+                })
+                .catch(
+                    error=>{
+                        console.error("An error occurred:",error);
+                        window.location='/'
+                    });
+        </script>
+        <style>
+            body {
+                height:100%;
+                min-width:320px;
+                overflow-x:auto;
+                overflow-y:hidden
+            }
+            body {
+                font-family:sans-serif;
+                display:flex;
+                align-items:center;
+                justify-content:center
+            }
+            .spinner {
+                position:absolute;
+                left:50%;
+                top:50%;
+                height:40px;
+                width:40px;
+                margin:-26px 0 0 -26px;
+                box-sizing:content-box;
+                animation:rotation 1s infinite linear;
+                border-width:6px;
+                border-style:solid;
+                border-radius:100%
+            }
+            @keyframes rotation {
+                from {
+                    transform:rotate(0deg)
+                }
+                to {
+                    transform:rotate(360deg)
+                }
+            }
+            @media (prefers-color-scheme:dark) {
+                body {
+                    color:#d4d4d4;
+                    background:#151515;
+                    color-scheme:dark
+                }
+                .spinner {
+                    border-color:rgba(116,116,116,0.3);
+                    border-top-color:rgb(116,116,116)
+                }
+            }
+            @media (prefers-color-scheme:light) {
+                body {
+                    color:#303030;
+                    background:white;
+                    color-scheme:light
+                }
+                .spinner {
+                    border-color:rgba(75,75,75,0.3);
+                    border-top-color:rgb(75,75,75)
+                }
+            }
+        </style>
     </body>
     </html>
 HTML;
@@ -128,11 +210,13 @@ HTML;
      */
     public function renderRedirectURIBounce(): string
     {
-        $info = $data['info'] ?? 'No additional information provided.';
+        // XXX: Is this needed?
+        // $info = $data['info'] ?? 'No additional information provided.';
 
         return <<<HTML
-        <html>
+        <html lang="en-US">
             <head>
+                <title></title>
                 <script>
                     const baseURL = window.location.href.split("?")[0]
                     const searchParams = new URLSearchParams(window.location.search)
@@ -151,11 +235,13 @@ HTML;
      */
     public function renderWildcardConsole(string $uri, string $targetURI, string $appName, string $redirectURI): string
     {
-        $info = $data['info'] ?? 'No additional information provided.';
+        // XXX: Is this needed?
+        // $info = $data['info'] ?? 'No additional information provided.';
 
         return <<<HTML
-        <html>
+        <html lang="en-US">
             <head>
+                <title></title>
                 <meta charset="UTF-8" />
                 <style>
                     body {

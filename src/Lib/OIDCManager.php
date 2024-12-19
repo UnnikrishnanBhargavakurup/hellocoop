@@ -3,6 +3,8 @@
 namespace HelloCoop\Lib;
 
 use HelloCoop\Config\ConfigInterface;
+use HelloCoop\Exception\CryptoFailedException;
+use HelloCoop\Exception\DecryptionFailedException;
 use HelloCoop\Type\OIDC;
 use HelloCoop\HelloRequest\HelloRequestInterface;
 use HelloCoop\HelloResponse\HelloResponseInterface;
@@ -27,6 +29,9 @@ class OIDCManager
         $this->crypto = $crypto;
     }
 
+    /**
+     * @throws DecryptionFailedException
+     */
     public function getOidc(): ?OIDC
     {
         $oidcCookie = $this->helloRequest->getCookie($this->config->getCookies()['oidcName']);
@@ -50,6 +55,9 @@ class OIDCManager
         return null;
     }
 
+    /**
+     * @throws CryptoFailedException
+     */
     public function saveOidc(OIDC $oidc): void
     {
         try {

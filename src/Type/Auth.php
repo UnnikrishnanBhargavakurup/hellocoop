@@ -17,8 +17,8 @@ class Auth
         $this->cookieToken = $cookieToken;
     }
 
-    /**
-     * Convert the instance to an array of key-value pairs.
+    /** Convert the instance to an array of key-value pairs.
+     * @return array<string, bool|string|array<string, mixed>|null>
      */
     public function toArray(): array
     {
@@ -29,8 +29,9 @@ class Auth
         ];
     }
 
-    /**
-     * Create an instance from an array of key-value pairs.
+    /** Create an instance from an array of key-value pairs.
+     * @param array<string, bool|string|array<string>|null>|null $data
+     * @return Auth
      */
     public static function fromArray(?array $data): self
     {
@@ -40,13 +41,19 @@ class Auth
         }
 
         // Create the AuthCookie instance from the array if it exists
-        $authCookie = isset($data['authCookie']) ? AuthCookie::fromArray($data['authCookie']) : null;
+        $authCookie = isset($data['authCookie']) && is_array($data['authCookie'])
+            ? AuthCookie::fromArray($data['authCookie'])
+            : null;
+
+        $cookieToken = isset($data['cookieToken']) && is_string($data['cookieToken'])
+            ? $data['cookieToken']
+            : null;
 
         // Return the new Auth instance
         return new self(
-            $data['isLoggedIn'],
+            is_bool($data['isLoggedIn']) ? $data['isLoggedIn'] : false,
             $authCookie,
-            $data['cookieToken'] ?? null
+            $cookieToken
         );
     }
 }

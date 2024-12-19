@@ -11,14 +11,22 @@ class Crypto
 {
     private string $secret;
 
-    public function __construct(string $secret)
+    /**
+     * @throws InvalidSecretException
+     */
+    public function __construct(?string $secret)
     {
-        if (!$this->checkSecret($secret)) {
+        if (is_null($secret) || !$this->checkSecret($secret)) {
             throw new InvalidSecretException();
         }
-        $this->secret = hex2bin($secret);
+        $bin = hex2bin($secret);
+        $this->secret = !$bin ? "" : $bin;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @throws CryptoFailedException
+     */
     public function encrypt(array $data): string
     {
         $jsonData = json_encode($data);
@@ -38,6 +46,10 @@ class Crypto
         return $this->uint8ArrayToUrlSafeBase64($encryptedData);
     }
 
+    /**
+     * @return array<string, mixed>|null
+     * @throws DecryptionFailedException
+     */
     public function decrypt(string $encryptedStr): ?array
     {
         try {
@@ -53,13 +65,15 @@ class Crypto
                 throw new DecryptionFailedException();
             }
 
-            return json_decode($decryptedData, true);
+            /** @var array<string, mixed>|null $jsonData */
+            $jsonData = json_decode($decryptedData, true);
+            return $jsonData;
         } catch (Exception $e) {
             throw new DecryptionFailedException();
         }
     }
 
-    public function checkSecret($secret): bool
+    public function checkSecret(string $secret): bool
     {
         if (!ctype_xdigit($secret) || strlen($secret) % 2 != 0) {
             return false;
@@ -76,7 +90,6 @@ class Crypto
     private function urlSafeBase64ToUint8Array(string $base64String): string
     {
         $base64 = strtr($base64String, '-_', '+/');
-        $binaryData = base64_decode($base64 . str_repeat('=', (4 - strlen($base64) % 4) % 4));
-        return $binaryData;
+        return base64_decode($base64 . str_repeat('=', (4 - strlen($base64) % 4) % 4));
     }
 }

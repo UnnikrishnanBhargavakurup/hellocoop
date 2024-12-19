@@ -19,6 +19,10 @@ class OIDC
         $this->targetUri = $targetUri;
     }
 
+    /**
+     * @param array<string, string> $data
+     * @return self
+     */
     public static function fromArray(array $data): self
     {
         if (!isset($data['code_verifier'])) {
@@ -45,6 +49,9 @@ class OIDC
         );
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function toArray(): array
     {
         return [

@@ -14,7 +14,7 @@ class PKCE
     {
         $mask = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~";
         $result = "";
-        $randomBytes = random_bytes($size);
+        $randomBytes = random_bytes(max(1, $size));
 
         // Loop through each byte to generate a random character from the mask
         for ($i = 0; $i < $size; $i++) {
@@ -37,14 +37,12 @@ class PKCE
         // Base64 URL encode the hash
         $encoded = base64_encode($hash);
         $encoded = rtrim($encoded, '=');
-        $encoded = str_replace(['/', '+'], ['_', '-'], $encoded);
-
-        return $encoded;
+        return str_replace(['/', '+'], ['_', '-'], $encoded);
     }
 
     /** Generate a PKCE challenge pair
      * @param int $length Length of the verifier (between 43-128). Defaults to 43.
-     * @return array A PKCE challenge pair containing 'code_verifier' and 'code_challenge'
+     * @return array<string, string> A PKCE challenge pair containing 'code_verifier' and 'code_challenge'
      */
     public function generatePkce(int $length = self::VERIFIER_LENGTH): array
     {
@@ -68,7 +66,9 @@ class PKCE
         return $actualChallenge === $expectedChallenge;
     }
 
-    // Generate a PKCE challenge pair
+    /** Generate a PKCE challenge pair
+     * @return array<string, string>
+     */
     public function generate(): array
     {
         $codeVerifier = self::generateVerifier();

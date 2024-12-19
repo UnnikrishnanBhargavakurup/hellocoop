@@ -4,6 +4,10 @@ namespace HelloCoop\Lib;
 
 class TokenParser
 {
+    /**
+     * @param string $token
+     * @return array<string, mixed>
+     */
     public function parseToken(string $token): array
     {
         $parts = explode('.', $token);
@@ -35,7 +39,7 @@ class TokenParser
 
     private function base64UrlDecode(string $data): string
     {
-        $decodedData = strtr($data, '-_', '+/');
-        return base64_decode($decodedData, true);
+        $decodedData = base64_decode(strtr($data, '-_', '+/'), true);
+        return  !$decodedData ? "" : $decodedData ;
     }
 }

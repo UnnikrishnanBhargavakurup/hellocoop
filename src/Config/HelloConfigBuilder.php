@@ -13,6 +13,7 @@ class HelloConfigBuilder
     private ?string $redirectURI = null;
     private string $host = '';
     private ?string $secret = null;
+    /**  @var array<string, string> */
     private array $cookies = [
         'authName' => 'hellocoop_auth',
         'oidcName' => 'hellocoop_oidc',
@@ -20,17 +21,23 @@ class HelloConfigBuilder
     private bool $production = true;
     private string $helloDomain = 'hello.coop';
     private ?string $helloWallet = null;
+    /**  @var array<string> */
     private array $scope = ['openid', 'name', 'email', 'picture'];
+    /**  @var array<string> */
     private array $providerHint = ['github'];
+    /**  @var array<string, string> */
     private array $routes = [
         'loggedIn' => '/',
         'loggedOut' => '/',
         'error' => '/error',
     ];
+    /**  @var callable|null */
     private $loginSync = null;
+    /**  @var callable|null */
     private $logoutSync = null;
     private ?bool $cookieToken = null;
     private ?bool $logDebug = null;
+    /**  @var array<string, int|string>|null */
     private ?array $error = null;
 
     public function setApiRoute(string $apiRoute): self
@@ -87,6 +94,9 @@ class HelloConfigBuilder
         return $this;
     }
 
+    /**
+     * @param array<string, string> $cookies
+     */
     public function setCookies(array $cookies): self
     {
         $this->cookies = $cookies;
@@ -111,30 +121,47 @@ class HelloConfigBuilder
         return $this;
     }
 
+    /**
+     * @param array<string> $scope
+     */
     public function setScope(array $scope): self
     {
         $this->scope = $scope;
         return $this;
     }
 
+    /**
+     * @param array<string> $providerHint
+     */
     public function setProviderHint(array $providerHint): self
     {
         $this->providerHint = $providerHint;
         return $this;
     }
 
+    /**
+     * @param array<string, string> $routes
+     */
     public function setRoutes(array $routes): self
     {
         $this->routes = $routes;
         return $this;
     }
 
+    /**
+     * @param callable|null $loginSync
+     * @return HelloConfigBuilder
+     */
     public function setLoginSync(?callable $loginSync): self
     {
         $this->loginSync = $loginSync;
         return $this;
     }
 
+    /**
+     * @param callable|null $logoutSync
+     * @return HelloConfigBuilder
+     */
     public function setLogoutSync(?callable $logoutSync): self
     {
         $this->logoutSync = $logoutSync;
@@ -153,6 +180,9 @@ class HelloConfigBuilder
         return $this;
     }
 
+    /**
+     * @param array<string, int|string>|null $error
+     */
     public function setError(?array $error): self
     {
         $this->error = $error;

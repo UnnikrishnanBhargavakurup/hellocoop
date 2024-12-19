@@ -2,6 +2,7 @@
 
 namespace HelloCoop\Lib;
 
+use Exception;
 use HelloCoop\Config\Constants;
 use HelloCoop\Utils\CurlWrapper;
 
@@ -15,6 +16,11 @@ class TokenFetcher
         $this->curl = $curl;
     }
 
+    /**
+     * @param array<string, string> $config
+     * @return string
+     * @throws Exception
+     */
     public function fetchToken(array $config): string
     {
         $code = $config['code'];
@@ -50,6 +56,7 @@ class TokenFetcher
 
             $this->curl->close($ch);
 
+            /** @var array<string, mixed> $json */
             $json = json_decode($response, true);
 
             if ($httpCode !== 200) {
@@ -57,11 +64,11 @@ class TokenFetcher
                 throw new \Exception($message);
             }
 
-            if (isset($json['error'])) {
+            if (isset($json['error']) && is_string($json['error'])) {
                 throw new \Exception($json['error']);
             }
 
-            if (!isset($json['id_token'])) {
+            if (!isset($json['id_token']) || !is_string($json['id_token'])) {
                 throw new \Exception('No id_token in response.');
             }
 

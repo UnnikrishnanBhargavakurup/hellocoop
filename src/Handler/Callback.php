@@ -2,6 +2,7 @@
 
 namespace HelloCoop\Handler;
 
+use HelloCoop\Exception\InvalidSecretException;
 use HelloCoop\HelloResponse\HelloResponseInterface;
 use HelloCoop\HelloRequest\HelloRequestInterface;
 use HelloCoop\Config\ConfigInterface;
@@ -38,6 +39,9 @@ class Callback
         $this->config = $config;
     }
 
+    /**
+     * @throws InvalidSecretException
+     */
     private function getOIDCManager(): OIDCManager
     {
         return $this->oidcManager ??= new OIDCManager(
@@ -87,7 +91,8 @@ class Callback
                 throw new SameSiteCallbackException();
             }
 
-            $oidcState = $this->getOIDCManager()->getOidc()->toArray();
+            $oidc = $this->getOIDCManager()->getOidc();
+            $oidcState = ($oidc) ? $oidc->toArray() : [];
             if (!$oidcState) {
                 return $this->sendErrorPage([
                     'error' => 'invalid_request',
@@ -189,7 +194,7 @@ class Callback
                 }
             }
 
-            if ($auth['isLoggedIn'] && isset($payload['org'])) {
+            if (isset($payload['org'])) {
                 $auth['authCookie']['org'] = $payload['org'];
             }
 
@@ -259,7 +264,7 @@ class Callback
      * Uses the target URI from error details or a fallback error route. Updates the query
      * string with error information. Throws an exception if no error URI is available.
      *
-     * @param array $error Error details including 'target_uri', 'error', and 'error_description'.
+     * @param array<string, int|string> $error Error details including 'target_uri', 'error', and 'error_description'.
      * @param string $errorMessage A message describing the error.
      * @param Throwable|null $previous Previous exception for chaining (optional).
      *
@@ -271,7 +276,7 @@ class Callback
     {
         $error_uri = $error['target_uri'] ?? $this->config->getRoutes()['error'] ?? null;
         if ($error_uri) {
-            list($pathString, $queryString) = array_pad(explode('?', $error_uri, 2), 2, '');
+            list($pathString, $queryString) = array_pad(explode('?', (string) $error_uri, 2), 2, '');
             // Parse the query string into an array
             parse_str($queryString, $queryArray);
             foreach ($error as $key => $value) {

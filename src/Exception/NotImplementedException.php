@@ -6,4 +6,6 @@ use BadMethodCallException;
 
 class NotImplementedException extends BadMethodCallException
 {
+    /** @var string  */
+    protected $message = 'Not Implemented.';
 }

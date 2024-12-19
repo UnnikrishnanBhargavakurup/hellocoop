@@ -17,15 +17,45 @@ class HelloConfig implements ConfigInterface
     private string $host;
     private ?string $secret = null;
     private ?bool $logDebug = null;
+    /** @var array<string, int|string>|null */
     private ?array $error = null;
+    /** @var array<string> */
     private array $scope;
+    /** @var array<string> */
     private array $providerHint;
+    /** @var array<string, string> */
     private array $routes;
+    /** @var array<string, string> */
     private array $cookies;
+    /** @var callable|null */
     private $loginSync;
+    /** @var callable|null */
     private $logoutSync;
     private bool $production;
 
+    /**
+     * @param string $apiRoute
+     * @param string $authApiRoute
+     * @param string $loginApiRoute
+     * @param string $logoutApiRoute
+     * @param bool $sameSiteStrict
+     * @param string|null $clientId
+     * @param string|null $redirectURI
+     * @param string $host
+     * @param string|null $secret
+     * @param callable|null $loginSync
+     * @param callable|null $logoutSync
+     * @param array<string, string> $cookies
+     * @param bool $production
+     * @param string $helloDomain
+     * @param string|null $helloWallet
+     * @param array<string> $scope
+     * @param array<string> $providerHint
+     * @param array<string, string> $routes
+     * @param bool|null $cookieToken
+     * @param bool|null $logDebug
+     * @param array<string, int|string>|null $error
+     */
     public function __construct(
         string $apiRoute,
         string $authApiRoute,
@@ -89,26 +119,41 @@ class HelloConfig implements ConfigInterface
         return $this->sameSiteStrict;
     }
 
+    /**
+     * @return array<string, int|string>|null
+     */
     public function getError(): ?array
     {
         return $this->error;
     }
 
+    /**
+     * @return array<string>|null
+     */
     public function getScope(): ?array
     {
         return $this->scope;
     }
 
+    /**
+     * @return array<string>|null
+     */
     public function getProviderHint(): ?array
     {
         return $this->providerHint;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getRoutes(): array
     {
         return $this->routes;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getCookies(): array
     {
         return $this->cookies;

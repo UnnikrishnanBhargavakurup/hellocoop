@@ -4,13 +4,13 @@ namespace HelloCoop\Type\Common;
 
 trait OptionalStringClaimsTrait
 {
-    public $name;
-    public $nickname;
-    public $preferred_username;
-    public $given_name;
-    public $family_name;
-    public $email;
-    public $phone;
-    public $picture;
-    public $ethereum;
+    public string $name;
+    public string $nickname;
+    public string $preferred_username;
+    public string $given_name;
+    public string $family_name;
+    public string $email;
+    public string $phone;
+    public string $picture;
+    public string $ethereum;
 }

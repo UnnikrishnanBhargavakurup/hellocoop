@@ -24,8 +24,10 @@ interface HelloResponseInterface
      * @param int $expire The expiration time of the cookie as a Unix timestamp. Default is 0 (session cookie).
      * @param string $path The path on the server where the cookie will be available. Default is '/'.
      * @param string $domain The domain that the cookie is available to. Default is an empty string.
-     * @param bool $secure Indicates if the cookie should only be transmitted over a secure HTTPS connection. Default is false.
-     * @param bool $httponly When true, makes the cookie accessible only through the HTTP protocol, restricting access from JavaScript. Default is true.
+     * @param bool $secure Indicates if the cookie should only be transmitted over a secure HTTPS connection.
+     *                     Default is false.
+     * @param bool $httponly When true, makes the cookie accessible only through the HTTP protocol, restricting access
+     *                       from JavaScript. Default is true.
      * @return void
      */
     public function setCookie(
@@ -65,8 +67,8 @@ interface HelloResponseInterface
      * different frameworks or environments to implement their own mechanisms
      * for encoding and returning JSON data.
      *
-     * @param array $data The data to be converted to a JSON response.
-     * @return array The structured JSON response data.
+     * @param array<string, mixed> $data The data to be converted to a JSON response.
+     * @return string The string encoded JSON response data.
      */
     public function json(array $data): string;
 
