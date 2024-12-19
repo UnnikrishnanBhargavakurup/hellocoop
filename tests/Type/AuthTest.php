@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class AuthTest extends TestCase
 {
-    public function testConstructorInitializesProperties()
+    public function testConstructorInitializesProperties(): void
     {
         $authCookie = new AuthCookie('user123', time());
         $authCookie->setExtraProperty('role', 'admin');
@@ -20,7 +20,7 @@ class AuthTest extends TestCase
         $this->assertSame('token123', $auth->cookieToken);
     }
 
-    public function testConstructorWithNullValues()
+    public function testConstructorWithNullValues(): void
     {
         $auth = new Auth(false);
 
@@ -29,7 +29,7 @@ class AuthTest extends TestCase
         $this->assertNull($auth->cookieToken);
     }
 
-    public function testAuthCookieProperties()
+    public function testAuthCookieProperties(): void
     {
         $authCookie = new AuthCookie('user123', time());
         $authCookie->setExtraProperty('role', 'admin');
@@ -40,7 +40,7 @@ class AuthTest extends TestCase
         $this->assertSame('admin', $auth->authCookie->getExtraProperty('role'));
     }
 
-    public function testAuthWithoutCookieToken()
+    public function testAuthWithoutCookieToken(): void
     {
         $auth = new Auth(true);
 

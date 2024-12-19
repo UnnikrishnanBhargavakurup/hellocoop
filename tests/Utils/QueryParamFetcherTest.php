@@ -20,7 +20,7 @@ class QueryParamFetcherTest extends TestCase
         $_GET = $this->originalGet;
     }
 
-    public function testFetchWithExistingKeys()
+    public function testFetchWithExistingKeys(): void
     {
         $_GET = [
             'key1' => 'value1',
@@ -35,7 +35,7 @@ class QueryParamFetcherTest extends TestCase
         ], $result);
     }
 
-    public function testFetchWithNonExistentKeys()
+    public function testFetchWithNonExistentKeys(): void
     {
         $_GET = [
             'key1' => 'value1',
@@ -49,7 +49,7 @@ class QueryParamFetcherTest extends TestCase
         ], $result);
     }
 
-    public function testFetchWithMixedKeys()
+    public function testFetchWithMixedKeys(): void
     {
         $_GET = [
             'key1' => 'value1',

@@ -22,7 +22,7 @@ class Constants
 
     public static string $ORG_CLAIM = 'org';
 
-    public static function getValidIdentityClaims()
+    public static function getValidIdentityClaims(): array
     {
         return array_merge(
             self::$VALID_IDENTITY_STRING_CLAIMS,
@@ -31,7 +31,7 @@ class Constants
         );
     }
 
-    public static function getValidScopes()
+    public static function getValidScopes(): array
     {
         return array_merge(
             self::$VALID_IDENTITY_STRING_CLAIMS,

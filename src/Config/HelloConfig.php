@@ -10,6 +10,11 @@ class HelloConfig implements ConfigInterface
     private string $logoutApiRoute;
     private bool $sameSiteStrict;
     private ?string $clientId;
+
+    /**
+     * Include encrypted cookie in auth response
+     * @var ?bool $cookieToken
+     */
     private ?bool $cookieToken = null;
     private ?string $redirectURI;
     private string $helloDomain;
@@ -52,7 +57,7 @@ class HelloConfig implements ConfigInterface
             'loggedOut' => '/',
             'error' => '/error',
         ],
-        ?bool $cookieToken = null,
+        ?bool $cookieToken = null, // include encrypted cookie in auth response
         ?bool $logDebug = null,
         ?array $error = null
     ) {

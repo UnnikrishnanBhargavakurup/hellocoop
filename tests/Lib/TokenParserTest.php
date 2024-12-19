@@ -14,7 +14,7 @@ class TokenParserTest extends TestCase
         // Initialize the PKCE instance here
         $this->tokenParser = new TokenParser();
     }
-    public function testParseTokenSuccess()
+    public function testParseTokenSuccess(): void
     {
 
         $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZXhwIjoxNjU0MjA4ODAwfQ.sflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
@@ -28,7 +28,7 @@ class TokenParserTest extends TestCase
         $this->assertArrayHasKey('exp', $result['payload']);
     }
 
-    public function testParseTokenInvalidJson()
+    public function testParseTokenInvalidJson(): void
     {
         $invalidToken = 'invalid.token.format';
 
@@ -38,7 +38,7 @@ class TokenParserTest extends TestCase
         $this->tokenParser->parseToken($invalidToken);
     }
 
-    public function testParseTokenInvalidFormat()
+    public function testParseTokenInvalidFormat(): void
     {
         $invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
 

@@ -28,7 +28,7 @@ class CallbackTest extends TestCase
         $this->tokenFetcherMock->method('fetchToken')->willReturn('valid_token_id');
     }
 
-    public function testHandleCallbackSuccessfulLogin()
+    public function testHandleCallbackSuccessfulLogin(): void
     {
         $_COOKIE['oidcName'] = $this->crypto->encrypt([
             'code_verifier' => 'test_verifier',
@@ -68,7 +68,7 @@ class CallbackTest extends TestCase
         $this->assertEquals('http://api.example.com?uri=example.com&appName=MyApp&redirectURI=https%3A%2F%2Fexample.com%2Fcallback&targetURI=%2Fdashboard&wildcard_console=true', $result);
     }
 
-    public function testHandleCallbackMissingCode()
+    public function testHandleCallbackMissingCode(): void
     {
         $_COOKIE['oidcName'] = $this->crypto->encrypt([
             'code_verifier' => 'test_verifier',
@@ -89,7 +89,7 @@ class CallbackTest extends TestCase
         $this->assertEquals('/dashboard?error=invalid_request&error_description=Missing+code+parameter', $this->callback->handleCallback());
     }
 
-    public function testHandleCallbackInvalidTokenAudience()
+    public function testHandleCallbackInvalidTokenAudience(): void
     {
         // Set up mock behaviors
         $_GET = array_merge($_GET, [

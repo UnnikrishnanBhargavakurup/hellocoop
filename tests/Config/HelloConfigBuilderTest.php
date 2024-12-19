@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class HelloConfigBuilderTest extends TestCase
 {
-    public function testHelloConfigBuilderBuildsConfigCorrectly()
+    public function testHelloConfigBuilderBuildsConfigCorrectly(): void
     {
         // Arrange: Create the builder and set values
         $builder = new HelloConfigBuilder();

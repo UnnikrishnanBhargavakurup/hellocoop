@@ -17,7 +17,7 @@ class PKCETest extends TestCase
     }
 
     /** @test */
-    public function testGeneratesAVerifierOfCorrectLength()
+    public function testGeneratesAVerifierOfCorrectLength(): void
     {
         // Test the default length of the verifier
         $verifier = $this->pkce->generateVerifier();
@@ -30,7 +30,7 @@ class PKCETest extends TestCase
     }
 
     /** @test */
-    public function testGeneratesAValidCodeChallenge()
+    public function testGeneratesAValidCodeChallenge(): void
     {
         // Generate a verifier and its corresponding challenge
         $verifier = $this->pkce->generateVerifier();
@@ -42,7 +42,7 @@ class PKCETest extends TestCase
     }
 
     /** @test */
-    public function testGeneratesPkceChallengePair()
+    public function testGeneratesPkceChallengePair(): void
     {
         $pkcePair = $this->pkce->generatePkce();
 
@@ -55,7 +55,7 @@ class PKCETest extends TestCase
     }
 
     /** @test */
-    public function testVerifiesTheCorrectChallenge()
+    public function testVerifiesTheCorrectChallenge(): void
     {
         // Generate a verifier and a challenge pair
         $pkcePair = $this->pkce->generatePkce();
@@ -71,7 +71,7 @@ class PKCETest extends TestCase
     }
 
     /** @test */
-    public function testGeneratesACodeVerifierAndChallengePair()
+    public function testGeneratesACodeVerifierAndChallengePair(): void
     {
         // Generate the code verifier and challenge pair
         $pkcePair = $this->pkce->generate();

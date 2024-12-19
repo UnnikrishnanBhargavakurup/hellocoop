@@ -40,7 +40,7 @@ class HelloClientTest extends TestCase
         $this->pageRendererMock->method('renderErrorPage')->willReturn("error_page");
     }
 
-    public function testRouteHandlesAuth()
+    public function testRouteHandlesAuth(): void
     {
         // Simulate $_GET parameters
         $_GET = ['op' => 'auth'];
@@ -61,7 +61,7 @@ class HelloClientTest extends TestCase
         $this->assertSame('auth_response', $result);
     }
 
-    public function testRouteHandlesCallback()
+    public function testRouteHandlesCallback(): void
     {
         // Simulate $_GET parameters
         $_GET = ['code' => 'callback_code'];
@@ -88,7 +88,7 @@ class HelloClientTest extends TestCase
         $this->assertSame('/dashboard', $result);
     }
 
-    public function testRouteHandlesCallbackException()
+    public function testRouteHandlesCallbackException(): void
     {
         // Simulate $_GET parameters
         $_GET = ['code' => 'callback_code'];

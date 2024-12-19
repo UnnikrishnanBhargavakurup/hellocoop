@@ -14,26 +14,26 @@ class HelloRequestTest extends TestCase
         $this->request = new HelloRequest();
     }
 
-    public function testFetchReturnsGetParameter()
+    public function testFetchReturnsGetParameter(): void
     {
         $_GET['test'] = 'value';
         $this->assertSame('value', $this->request->fetch('test'));
     }
 
-    public function testFetchReturnsPostParameterIfGetNotSet()
+    public function testFetchReturnsPostParameterIfGetNotSet(): void
     {
         unset($_GET['test']);
         $_POST['test'] = 'value';
         $this->assertSame('value', $this->request->fetch('test'));
     }
 
-    public function testFetchReturnsDefaultIfNeitherGetNorPostIsSet()
+    public function testFetchReturnsDefaultIfNeitherGetNorPostIsSet(): void
     {
         unset($_GET['test'], $_POST['test']);
         $this->assertSame('default', $this->request->fetch('test', 'default'));
     }
 
-    public function testFetchMultipleReturnsCorrectValues()
+    public function testFetchMultipleReturnsCorrectValues(): void
     {
         $_GET = ['key1' => 'value1'];
         $_POST = ['key2' => 'value2'];
@@ -47,28 +47,28 @@ class HelloRequestTest extends TestCase
         ], $result);
     }
 
-    public function testFetchHeaderReturnsHeaderValue()
+    public function testFetchHeaderReturnsHeaderValue(): void
     {
         $_SERVER['HTTP_TEST_HEADER'] = 'HeaderValue';
 
         $this->assertSame('HeaderValue', $this->request->fetchHeader('Test-Header'));
     }
 
-    public function testFetchHeaderReturnsDefaultIfHeaderNotSet()
+    public function testFetchHeaderReturnsDefaultIfHeaderNotSet(): void
     {
         unset($_SERVER['HTTP_TEST_HEADER']);
 
         $this->assertSame('default', $this->request->fetchHeader('Test-Header', 'default'));
     }
 
-    public function testGetCookieReturnsCookieValue()
+    public function testGetCookieReturnsCookieValue(): void
     {
         $_COOKIE['test_cookie'] = 'cookie_value';
 
         $this->assertSame('cookie_value', $this->request->getCookie('test_cookie'));
     }
 
-    public function testGetCookieReturnsNullIfCookieNotSet()
+    public function testGetCookieReturnsNullIfCookieNotSet(): void
     {
         unset($_COOKIE['test_cookie']);
 

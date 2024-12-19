@@ -17,7 +17,7 @@ class HelloResponseTest extends TestCase
         $this->response = new HelloResponse();
     }
 
-    public function testSetHeader()
+    public function testSetHeader(): void
     {
         $headerMock = $this->getFunctionMock('HelloCoop\HelloResponse', 'header');
         $headerMock->expects($this->once())
@@ -26,7 +26,7 @@ class HelloResponseTest extends TestCase
         $this->response->setHeader('Content-Type', 'application/json');
     }
 
-    public function testSetHeaderWithArrayValue()
+    public function testSetHeaderWithArrayValue(): void
     {
         $headerMock = $this->getFunctionMock('HelloCoop\HelloResponse', 'header');
         $headerMock->expects($this->once())
@@ -35,7 +35,7 @@ class HelloResponseTest extends TestCase
         $this->response->setHeader('X-Custom-Header', ['value1', 'value2']);
     }
 
-    public function testSetCookie()
+    public function testSetCookie(): void
     {
         $setCookieMock = $this->getFunctionMock('HelloCoop\HelloResponse', 'setcookie');
         $setCookieMock->expects($this->once())
@@ -55,7 +55,7 @@ class HelloResponseTest extends TestCase
         $this->response->setCookie('test_cookie', 'test_value');
     }
 
-    public function testDeleteCookie()
+    public function testDeleteCookie(): void
     {
         $setCookieMock = $this->getFunctionMock('HelloCoop\HelloResponse', 'setcookie');
         $setCookieMock->expects($this->once())
@@ -70,7 +70,7 @@ class HelloResponseTest extends TestCase
         $this->response->deleteCookie('delete_cookie');
     }
 
-    public function testRedirect()
+    public function testRedirect(): void
     {
         // Mock the header function
         $headerMock = $this->getFunctionMock('HelloCoop\HelloResponse', 'header');

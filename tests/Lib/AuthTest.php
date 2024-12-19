@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use HelloCoop\Lib\Auth;
 use HelloCoop\Type\Auth as AuthType;
 use HelloCoop\Tests\Traits\ServiceMocksTrait;
-use Exception;
 
 class AuthTest extends TestCase
 {
@@ -24,7 +23,7 @@ class AuthTest extends TestCase
             $this->configMock,
         );
     }
-    public function testSaveAuthCookieSuccess()
+    public function testSaveAuthCookieSuccess(): void
     {
         $authMock = AuthType::fromArray([
             'isLoggedIn' => true,

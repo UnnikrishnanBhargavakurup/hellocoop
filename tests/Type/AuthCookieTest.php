@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 class AuthCookieTest extends TestCase
 {
-    public function testConstructorInitializesProperties()
+    public function testConstructorInitializesProperties(): void
     {
         $sub = 'user123';
         $iat = time();
@@ -19,7 +19,7 @@ class AuthCookieTest extends TestCase
         $this->assertSame($iat, $authCookie->iat);
     }
 
-    public function testSetAndGetExtraProperty()
+    public function testSetAndGetExtraProperty(): void
     {
         $authCookie = new AuthCookie('user123', time());
 
@@ -31,7 +31,7 @@ class AuthCookieTest extends TestCase
         $this->assertNull($authCookie->getExtraProperty('nonexistent_key'));
     }
 
-    public function testFromArrayCreatesInstanceWithValidData()
+    public function testFromArrayCreatesInstanceWithValidData(): void
     {
         $data = [
             'sub' => 'user123',
@@ -48,7 +48,7 @@ class AuthCookieTest extends TestCase
         $this->assertSame(456, $authCookie->getExtraProperty('custom2'));
     }
 
-    public function testFromArrayThrowsExceptionForMissingKeys()
+    public function testFromArrayThrowsExceptionForMissingKeys(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Missing required keys "sub" or "iat".');

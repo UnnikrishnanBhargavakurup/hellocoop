@@ -10,8 +10,8 @@ class SameSiteCallbackException extends Exception
     private array $errorDetails;
 
     public function __construct(
-        $message = "Same Site Callback Exception",
-        $code = 0,
+        string $message = "Same Site Callback Exception",
+        int $code = 0,
         ?Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);

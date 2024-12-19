@@ -6,9 +6,9 @@ class AuthUpdates extends Claims implements \ArrayAccess
 {
     private array $additionalProperties = [];
 
-    public function __construct(string $sub, int $iat, array $updates = [])
+    public function __construct(string $sub, array $updates = [])
     {
-        parent::__construct($sub, $iat);
+        parent::__construct($sub);
         $this->additionalProperties = $updates;
     }
 
